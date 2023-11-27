@@ -1,0 +1,146 @@
+
+.calendar-window {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3%;
+  padding: 5%;
+}
+
+.calendar {
+  border-right: 1px solid #aaaaaa;
+}
+
+.calendar-upper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 2%;
+}
+
+.calendar-change-date {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 0 12%;
+}
+
+.calendar-change-date div {
+  font-size: 5vh;
+  margin: 0 15%;
+  cursor: pointer;
+}
+
+.calendar-weekdays-text, .calendar-date {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
+
+.calendar-weekdays-text div {
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.853);
+}
+
+.current-month,
+.other-month,
+.current-date {
+  width: 30px; /* Set a width to create a square */
+  height: 30px; /* Set a height to create a square */
+  line-height: 30px; /* Vertically center the text */
+  border-radius: 50%; /* Makes the background round */
+  cursor: pointer; /* Add cursor pointer to indicate interactivity */
+}
+
+.current-month {
+  background-color: #f0f0f0; /* Use your desired background color for the current month */
+  color: #000; /* Use your desired text color for the current month */
+}
+
+.current-month:hover {
+  background-color: #74b1b6; /* Use your desired hover background color for the current month */
+  color: #fff; /* Use your desired hover text color for the current month */
+}
+
+.other-month {
+  background-color: #f0f0f0; /* Use your desired background color for other months */
+  color: #888; /* Use your desired text color for other months */
+  cursor: default; /* Add cursor default for non-interactable dates */
+}
+
+.current-date {
+  background-color: #32CD32; /* Use your desired background color for today's date */
+  color: #fff; /* Use your desired text color for today's date */
+}
+
+.current-date:hover {
+  background-color: #228B22; /* Use your desired hover background color for today's date */
+}
+
+.highlighted {
+  background-color: #9c27b0; 
+  border-radius: 50%;
+  color: rgb(255, 255, 255); 
+}
+
+.highlighted:hover {
+  background-color: #7b1fa2; 
+}
+
+
+.selected-date {
+    background-color: #4169E1; /* Use your desired hover background color for the current month */
+    color: #fff; /* Use your desired hover text color for the current month */
+}
+
+.selected-date:hover {
+  background-color: #0000CD;
+}
+
+.today-schedule h3, .no-schedule {
+  margin-top: 2%;
+}
+
+/* Add these styles to your Calendar.css file */
+.event-list {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.event-list h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.event-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.event-list li {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.event-list h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.event-list p {
+  font-size: 1rem;
+  color: #666;
+}
