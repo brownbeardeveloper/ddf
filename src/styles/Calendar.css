@@ -1,9 +1,15 @@
-
 .calendar-window {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3%;
   padding: 5%;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; 
 }
 
 .calendar {
@@ -70,15 +76,6 @@
   cursor: default; /* Add cursor default for non-interactable dates */
 }
 
-.current-date {
-  background-color: #32CD32; /* Use your desired background color for today's date */
-  color: #fff; /* Use your desired text color for today's date */
-}
-
-.current-date:hover {
-  background-color: #228B22; /* Use your desired hover background color for today's date */
-}
-
 .highlighted {
   background-color: #9c27b0; 
   border-radius: 50%;
@@ -143,4 +140,45 @@
 .event-list p {
   font-size: 1rem;
   color: #666;
+}
+
+.current-date {
+  background-color: #32CD32; /* Use your desired background color for today's date */
+  color: #fff; /* Use your desired text color for today's date */
+}
+
+.current-date:hover {
+  background-color: #228B22; /* Use your desired hover background color for today's date */
+}
+
+@media screen and (max-width: 768px) {
+  .calendar-window {
+    grid-template-columns: 1fr; /* Set a single column layout for smaller screens */
+    gap: 2%; /* Adjust the gap between components */
+    padding: 2%; /* Adjust padding for smaller screens */
+  }
+
+  .calendar {
+    border-right: none; /* Remove the border for smaller screens */
+    margin-bottom: 2%; /* Adjust margin for smaller screens */
+  }
+
+  .today-schedule {
+    margin-top: 20px; /* Adjust margin for smaller screens */
+    padding: 20px; /* Adjust padding for smaller screens */
+  }
+
+  .event-list {
+    margin-top: 10px; /* Adjust margin for smaller screens */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .event-list h2 {
+    font-size: 1.2rem; /* Adjust font size for smaller screens */
+  }
+
+  .event-list li {
+    margin-bottom: 10px; /* Adjust margin for smaller screens */
+    padding: 8px; /* Adjust padding for smaller screens */
+  }
 }

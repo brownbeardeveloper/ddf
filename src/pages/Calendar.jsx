@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../database/firebase-config'
+import { HashLoader } from 'react-spinners';
 import dayjs from "dayjs"
 import '../styles/Calendar.css';
 
 export default function Calendar() {
     const today = dayjs();
+    const [loading, setLoading] = useState(true)
     const [currentDate, setCurrentDate] = useState(today);
     const [selectDate, setSelectDate] = useState(today);
-    const [eventList, setEventList] = useState([]);
     const [highlightDates, setHighlightDates] = useState([]); 
+    const postsCollectionRef = collection(db, "events");
 
-    const postsCollectionRef = collection(db, "posts");
 
     useEffect(() => {
         const getEventList = async () => {
             const data = await getDocs(postsCollectionRef);
             const eventData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-            setEventList(eventData);
             updateHighlightDates(eventData);
+            setLoading(false)
         }
 
         getEventList();
@@ -26,9 +27,10 @@ export default function Calendar() {
 
     const updateHighlightDates = (events) => {
         const highlighted = events.map(event => ({
-            date: dayjs(event.eventDate, 'YYYY-MM-DD').toDate(),
-            title: event.eventTitle,
-            text: event.eventDescription
+            organization: event.user.organization,
+            date: dayjs(event.date, 'YYYY-MM-DD').toDate(),
+            title: event.title,
+            text: event.description
         }));
         const sortedHighlighted = highlighted.sort((a, b) => a.date - b.date);
         setHighlightDates(sortedHighlighted);
@@ -36,13 +38,27 @@ export default function Calendar() {
 
     const sortedHighlightDates = [...highlightDates].sort((a, b) => a.date - b.date);
 
-    const days = ["M", "T", "W", "T", "F", "S", "S"];
-    const months = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"]
+    // Swedish weekdays' abbreviations, full names, and months' names    
+    const swedishWeekdaysChar = ["M", "T", "O", "T", "F", "L", "S"];
+    const swedishWeekdays = ["måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag"];
+    const swedishMonths = ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"]
     
+    function getOrdinalSuffix(day) {
+        if (day === 1 || day === 21 || day === 31) {
+            return day + "a";
+        } else if (day === 2 || day === 22) {
+            return day + "a";
+        } else if (day === 3 || day === 23) {
+            return day + "e";
+        } else {
+            return day + "e";
+        }
+    }
+
     const CalendarHeader = ({ month, year, onPrevMonth, onNextMonth }) => (
         <div className="calendar-upper">
             <div className="calendar-month-text">
-                <h1>{months[month]}, {year}</h1>
+                <h1>{swedishMonths[month]}, {year}</h1>
             </div>
     
             <div className="calendar-change-date">
@@ -93,6 +109,7 @@ export default function Calendar() {
                 currentMonth: currentDate.month() === firstDateOfMonth.month(),
                 today: currentDate.isSame(dayjs(), 'day'),
                 highlight: isHighlighted,
+                highlightOrganization : isHighlighted ? highlightedDate.organization : null,
                 highlightTitle: isHighlighted ? highlightedDate.title : null,
                 highlightText: isHighlighted ? highlightedDate.text : null
             });
@@ -103,6 +120,15 @@ export default function Calendar() {
 
     return (
         <div className="calendar-page">
+
+        {loading ? (
+            <div className="loader-container">
+                <HashLoader color="#d69d36" loading size={75} />
+            </div>
+          
+
+            ) : (
+            <>
             <div className="calendar-window">
                 <div className="calendar">
                     <CalendarHeader
@@ -113,7 +139,7 @@ export default function Calendar() {
                     />
 
                     <div className="calendar-weekdays-text">
-                        {days.map((day, index) => (
+                        {swedishWeekdaysChar.map((day, index) => (
                             <div key={index}>{day}</div>
                         ))}
                     </div>
@@ -132,13 +158,17 @@ export default function Calendar() {
                 </div>
 
                 <div className="today-schedule">
-                    <h1>Schedule for {selectDate.toDate().toDateString()}</h1>
-                    {generateDate().some(dateObj => dateObj.date.toDate().toDateString() === selectDate.toDate().toDateString() && dateObj.highlight) ? (
+                <h1>Dagens händelser för {`${swedishWeekdays[dayjs(selectDate.toDate().getDay() + 6) % 7]} den 
+                    ${getOrdinalSuffix(dayjs(selectDate.toDate()).date())}
+                    ${swedishMonths[dayjs(selectDate.toDate()).month()].toLowerCase()}`}
+                </h1>
+
+                    {generateDate().some(dateObj => dateObj.date.isSame(selectDate, 'day') && dateObj.highlight) ? (
                         generateDate().map(dateObj => {
-                            if (dateObj.date.toDate().toDateString() === selectDate.toDate().toDateString() && dateObj.highlight) {
+                            if (dateObj.date.isSame(selectDate, 'day') && dateObj.highlight) {
                                 return (
                                     <div key={dateObj.date.toDate().toDateString()}>
-                                        <h3>{dateObj.highlightTitle}</h3>
+                                        <h3>{dateObj.highlightOrganization} - {dateObj.highlightTitle}</h3>
                                         <p>{dateObj.highlightText}</p>
                                     </div>
                                 );
@@ -146,13 +176,13 @@ export default function Calendar() {
                             return null;
                         })
                     ) : (
-                        <p className="no-schedule">No meetings for now.</p>
+                        <p className="no-schedule">Inga aktiviteter för idag.</p>
                     )}
                 </div>
             </div>
 
             <div className="event-list">
-                <h2>Events for {months[currentDate.month()]}</h2>
+                <h2>Evenemang för {swedishMonths[currentDate.month()]}</h2>
                 <ul>
                     {sortedHighlightDates.map((event, index) => {
                         const eventDate = dayjs(event.date);
@@ -160,14 +190,16 @@ export default function Calendar() {
                             eventDate.month() === currentDate.month() && eventDate.year() === currentDate.year() &&
                              (
                                 <li key={index}>
-                                    <h3>{event.title}</h3>
-                                    <p>{eventDate.format("MMMM D, YYYY")} - {event.text}</p>
+                                    <h3>{event.organization} - {event.title}</h3>
+                                    <p>{swedishMonths[eventDate.month()]} {eventDate.format("D, YYYY")} - {event.text}</p>
                                 </li>
                             )
                         );
                     })}
                 </ul>
             </div>
+            </>
+            )}
         </div>
     )
 }    

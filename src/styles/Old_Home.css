@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'PermanentMarker'; 
+    src: url('../styles/fonts/PermanentMarker/PermanentMarker-Regular.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+.hero-container {
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    background-image: url(../features/hero-image.jpg);
+    background-size: cover;
+    background-position: center; /* Center the background image by default */
+}
+
+.hero-title h1 {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    bottom: 18vh;
+    font-size: 10vw; /* Set a default font size using vw units */
+    font-family: 'PermanentMarker', sans-serif;
+    color: #0bc4e9;
+    background-color: transparent; /* Background color */
+    text-shadow: 
+        -0.1em -0.1em 0 #111, /* Top-left shadow */
+        0.1em 0.1em 0 #111,   /* Bottom-right shadow */
+        0.1em -0.1em 0 #111,  /* Top-right shadow */
+        -0.1em 0.1em 0 #111;  /* Bottom-left shadow */}
+
+@media screen and (min-width: 768px) {
+    .hero-title h1 {
+      font-size: 6vw; /* Set a smaller font size for larger screens */
+    }
+}
+
+.homepage-welcome {
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: 5vh 0vh;
+}
+
+.homepage-welcome-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vh;
+    margin: 0vh 5vh;
+    font-size: 2.5vh;
+    color: #454545;
+}
+
+.homepage-image1 {
+    background-image: url(../features/homepage-image1.jpg);
+}
+
+.homepage-image2 {
+    background-image: url(../features/homepage-image2.jpg);
+}
+
+.homepage-image3 {
+    background-image: url(../features/homepage-image3.jpg);
+}
+
+.homepage-image1, .homepage-image2, .homepage-image3 {
+    display: flex;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}

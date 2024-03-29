@@ -6,8 +6,8 @@ export default function Error() {
     return (
         <div className="error">
             <img src={picture} alt="404" />
-            <h1>Ooops, page not found</h1>
-            <p>The link you followed may be broken or the page may have been removed.</p>
+            <h1>Oj, sidan kunde inte hittas</h1>
+            <p>Den länken du följde kanske är trasig eller så har sidan tagits bort.</p>
         </div>
     )
 }
