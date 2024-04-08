@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { addDoc, deleteDoc, getDocs, getDoc, updateDoc, doc, collection } from 'firebase/firestore'; 
-import { db } from '../database/firebase-config';
+import { db } from '../backend/firebase-config';
 import { HashLoader } from 'react-spinners';
-import '../styles/EventManager.css';
 
 export default function EventManager(userObject) {
 

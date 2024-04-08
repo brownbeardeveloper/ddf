@@ -1,8 +1,7 @@
 import React from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { db } from '../database/firebase-config';
-import '../styles/Login.css';
+import { db } from '../backend/firebase-config';
 
 export default function Login({ user, setUser }) {
 

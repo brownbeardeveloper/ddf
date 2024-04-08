@@ -1,5 +1,4 @@
 import React from "react"
-import '../styles/404.css'
 import picture from '../features/404.png'
 
 export default function Error() {

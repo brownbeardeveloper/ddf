@@ -1,5 +1,4 @@
 import React from "react";
-import '../styles/CommonPageStyles.css';
 
 export default function Page3() {
     return (

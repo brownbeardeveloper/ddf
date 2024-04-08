@@ -1,7 +1,6 @@
 // Page4.jsx
 
 import React from "react";
-import '../styles/CommonPageStyles.css';
 
 export default function Page4() {
     return (

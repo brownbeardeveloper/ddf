@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { useState } from "react"
-import './styles/App.css'
 import ProtectedRoute from './router/ProtectedRoute';
 import HomePage from './pages/Home';
 import Calendar from './pages/Calendar';
@@ -14,6 +13,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import EventManager from './pages/EventManager'
 import PermissionDenied from "./pages/PermissionDenied";
+import './styles/App.css';
 
 function App() {
 

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getDocs, collection } from 'firebase/firestore'
-import { db } from '../database/firebase-config'
+import { db } from '../backend/firebase-config'
 import { HashLoader } from 'react-spinners';
 import dayjs from "dayjs"
-import '../styles/Calendar.css';
 
 export default function Calendar() {
     const today = dayjs();
