@@ -3,6 +3,7 @@ import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../backend/firebase-config'
 import { HashLoader } from 'react-spinners';
 import dayjs from "dayjs"
+import { swedishMonths, swedishWeekdays, swedishWeekdaysChar } from "../data/se-version";
 
 export default function Calendar() {
     const today = dayjs();
@@ -36,11 +37,6 @@ export default function Calendar() {
     };
 
     const sortedHighlightDates = [...highlightDates].sort((a, b) => a.date - b.date);
-
-    // Swedish weekdays' abbreviations, full names, and months' names    
-    const swedishWeekdaysChar = ["M", "T", "O", "T", "F", "L", "S"];
-    const swedishWeekdays = ["måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag"];
-    const swedishMonths = ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"]
     
     function getOrdinalSuffix(day) {
         if (day === 1 || day === 21 || day === 31) {

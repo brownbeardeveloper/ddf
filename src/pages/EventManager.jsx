@@ -3,9 +3,8 @@ import { addDoc, deleteDoc, getDocs, getDoc, updateDoc, doc, collection } from '
 import { db } from '../backend/firebase-config';
 import { HashLoader } from 'react-spinners';
 
-export default function EventManager(userObject) {
+export default function EventManager({ user }) {
 
-  const { user } = userObject;
   const [loading, setLoading] = useState(true); 
   const [activeEditModeId, setActiveEditModeId] = useState(null);
   const [documents, setDocuments] = useState([]);
@@ -132,103 +131,108 @@ export default function EventManager(userObject) {
   });
 
   return (
-    <div className="remove-event">
-      <h1>Evenemangshanterare</h1>
+    <main className="px-6 py-8 max-w-screen-lg mx-auto bg-white rounded-lg shadow-lg">
+      <h1 className="text-3xl font-bold text-blue-500 mb-6">Evenemangshanterare</h1>
 
-      <div className="create-event-container">
-        <h2>Skapa Nytt Evenemang</h2>
-        <form id="myform" onSubmit={handleCreateEvent}>
-          <div>
-            <label>Rubrik:</label>
+      <div className="bg-gray-100 p-6 rounded-md mb-6">
+        <h2 className="text-xl font-semibold mb-4">Skapa Nytt Evenemang</h2>
+        <form onSubmit={handleCreateEvent}>
+          <div className="mb-4">
+            <label className="block mb-1">Rubrik:</label>
             <input
               type="text"
               value={newEventTitle}
               onChange={(e) => setNewEventTitle(e.target.value)}
               required
+              className="w-full px-3 py-2 border rounded-md"
             />
           </div>
-          <div>
-            <label>Datum:</label>
+          <div className="mb-4">
+            <label className="block mb-1">Datum:</label>
             <input
               type="date"
               value={newEventDate}
               onChange={(e) => setNewEventDate(e.target.value)}
               required
+              className="w-full px-3 py-2 border rounded-md"
             />
           </div>
-          <div>
-            <label>Beskrivning:</label>
+          <div className="mb-4">
+            <label className="block mb-1">Beskrivning:</label>
             <textarea
               value={newEventDescription}
               onChange={(e) => setNewEventDescription(e.target.value)}
               required
+              className="w-full px-3 py-2 border rounded-md"
             />
           </div>
-          <button type="submit">Skapa Evenemanget</button>
+          <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">Skapa Evenemanget</button>
         </form>
       </div>
 
-
-
       {loading ? (
-        <div className="loader-container">
+        <div className="flex items-center justify-center h-40">
           <HashLoader color="#d69d36" loading size={75} />
         </div>
         ) : (
-        <ul>
+        <ul className="space-y-6">
           {sortedDocuments.map((document) => (
             (user.auth === 'admin' || user.organization === document.user.organization) ? (
-              <li key={document.id}>
-                <div class="event-item">
-                  <h3>{document.date} - {document.user.organization} : {document.title}</h3>
-                  <div class="event-details">
-                    <p>{document.description}</p>
-                    <p>Skapad av {document.user.name}</p>
+              <li key={document.id} className="bg-white rounded-lg shadow-md p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-semibold">{document.date} - {document.user.organization} : {document.title}</h3>
+                  <div>
+                    <p className="italic text-sm text-gray-500">Skapad av {document.user.name}</p>
                   </div>
                 </div>
-                
+                <p>{document.description}</p>
+                <div className="mt-4">
+                  <button onClick={() => handleRemoveEvent(document.id)} className="bg-red-500 text-white py-2 px-4 rounded-md mr-2 hover:bg-red-600 transition duration-300 ease-in-out">Ta bort</button>
+                  <button value="editBtn" onClick={() => handleEditEvent(document.id)} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">
+                    { activeEditModeId === document.id ? "Avbryta" : "Redigera" }
+                  </button>
+                </div>
                 { activeEditModeId === document.id && (
-                  <div className='edit-mode'>
-                    <form id="myform" onSubmit={(event) => handleSaveEditedEvent(document.id, event)}>
-                      <div>
-                        <label>Rubrik:</label>
+                  <div className="bg-gray-100 p-6 rounded-md mt-4">
+                    <form onSubmit={(event) => handleSaveEditedEvent(document.id, event)}>
+                      <div className="mb-4">
+                        <label className="block mb-1">Rubrik:</label>
                         <input
                           type="text"
                           value={editTitle} 
                           onChange={(e) => setEditTitle(e.target.value)}
                           required
+                          className="w-full px-3 py-2 border rounded-md"
                         />
                       </div>
-                      <div>
-                        <label>Datum:</label>
+                      <div className="mb-4">
+                        <label className="block mb-1">Datum:</label>
                         <input
                           type="date"
                           value={editDate} 
                           onChange={(e) => setEditDate(e.target.value)}
                           required
+                          className="w-full px-3 py-2 border rounded-md"
                         />
                       </div>
-                      <div>
-                        <label>Beskrivning:</label>
+                      <div className="mb-4">
+                        <label className="block mb-1">Beskrivning:</label>
                         <textarea
                           value={editDescription}
                           onChange={(e) => setEditDescription(e.target.value)} 
                           required
+                          className="w-full px-3 py-2 border rounded-md"
                         />
                       </div>
-                      <button type="submit">Uppdatera Evenemanget</button>
+                      <button type="submit" className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 ease-in-out">Uppdatera Evenemanget</button>
                     </form>
                   </div>
                 )}
-                <button onClick={() => handleRemoveEvent(document.id)}>Ta bort</button>
-                <button value="editBtn" onClick={(event) => handleEditEvent(document.id, event)}>
-                  { activeEditModeId === document.id ? "Avbryta" : "Redigera" }
-                </button>
               </li>
             ) : null
           ))}
         </ul>
       )}
-    </div>
+    </main>
   )
 }

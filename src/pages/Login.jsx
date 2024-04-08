@@ -44,51 +44,51 @@ export default function Login({ user, setUser }) {
   };
 
   return (
-    <div className="login-background">
-      <div className="login-container">
-        <div className="login-content">
+    <main className="bg-gray-200 min-h-screen flex items-center justify-center">
+      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+        <div className="mb-8">
           {user ? (
-            <div>
-              <h1 className="login-header">Välkommen {user.name}!</h1>
-            </div>
+            <h1 className="text-3xl font-bold text-blue-500 mb-4 leading-tight">
+              Välkommen {user.name}!
+            </h1>
           ) : (
-            <div>
-              <h1 className="login-header">Välkommen Tillbaka!</h1>
-              <p className="login-subheader">Logga in nedanför</p>
-            </div>
-          )}
-
-          {!user ? (
-            <div className="form-container">
-              <form className="login-form" onSubmit={handleLogin}>
-                <div className="form-group">
-                  <div className="label-input">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="Ange din e-post"
-                    />
-                  </div>
-                  <div className="label-input">
-                    <label htmlFor="password">Lösenord:</label>
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      placeholder="Ange ditt lösenord"
-                    />
-                  </div>
-                </div>
-                <button type="submit">Login</button>
-              </form>
-            </div>
-          ) : (
-            <button onClick={logout}>Logout</button>
+            <>
+              <h1 className="text-3xl font-bold text-blue-500 mb-4 leading-tight">
+                Välkommen tillbaka!
+              </h1>
+              <p className="text-gray-600 mt-2">Logga in nedanför</p>
+            </>
           )}
         </div>
+
+        {!user ? (
+          <form onSubmit={handleLogin}>
+            <div className="mb-6">
+              <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Ange din e-post"
+                className="border border-gray-300 p-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-6">
+              <label htmlFor="password" className="block text-gray-700 font-bold mb-2">Lösenord:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Ange ditt lösenord"
+                className="border border-gray-300 p-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition duration-300">Login</button>
+          </form>
+        ) : (
+          <button onClick={logout} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition duration-300">Logout</button>
+        )}
       </div>
-    </div>
+    </main>
   );
 }
