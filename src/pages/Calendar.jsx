@@ -3,16 +3,18 @@ import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../backend/firebase-config'
 import { HashLoader } from 'react-spinners';
 import dayjs from "dayjs"
-import { swedishMonths, swedishWeekdays, swedishWeekdaysChar } from "../data/se-version";
+import { swedishWeekdaysChar } from "../data/se-version";
+import TodaySchedule from "../components/Today-schedule";
+import CalendarWindow from "../components/calendar/CalendarWindow";
+import EventList from "../components/EventList";
 
 export default function Calendar() {
     const today = dayjs();
     const [loading, setLoading] = useState(true)
     const [currentDate, setCurrentDate] = useState(today);
     const [selectDate, setSelectDate] = useState(today);
-    const [highlightDates, setHighlightDates] = useState([]); 
+    const [highlightDates, setHighlightDates] = useState([]);
     const postsCollectionRef = collection(db, "events");
-
 
     useEffect(() => {
         const getEventList = async () => {
@@ -21,7 +23,6 @@ export default function Calendar() {
             updateHighlightDates(eventData);
             setLoading(false)
         }
-
         getEventList();
     }, []);
 
@@ -37,47 +38,6 @@ export default function Calendar() {
     };
 
     const sortedHighlightDates = [...highlightDates].sort((a, b) => a.date - b.date);
-    
-    function getOrdinalSuffix(day) {
-        if (day === 1 || day === 21 || day === 31) {
-            return day + "a";
-        } else if (day === 2 || day === 22) {
-            return day + "a";
-        } else if (day === 3 || day === 23) {
-            return day + "e";
-        } else {
-            return day + "e";
-        }
-    }
-
-    const CalendarHeader = ({ month, year, onPrevMonth, onNextMonth }) => (
-        <div className="calendar-upper">
-            <div className="calendar-month-text">
-                <h1>{swedishMonths[month]}, {year}</h1>
-            </div>
-    
-            <div className="calendar-change-date">
-                <div onClick={onPrevMonth}>&lt;</div>
-                <div onClick={onNextMonth}>&gt;</div>
-            </div>
-        </div>
-    )
-    
-    const CalendarDateCell = ({ date, isCurrentMonth, isToday, highlight }) => (
-
-        <div className={`calendar-date-cell 
-        ${isCurrentMonth ? 'current-month' : 'other-month'} 
-        ${isToday ? 'current-date' : ''} 
-        ${selectDate.toDate().toDateString() === date.toDate().toDateString() ? 'selected-date' : ''}
-        ${highlight ? 'highlighted' : ''}
-        `}
-        
-        onClick={() => setSelectDate(date)} >
-
-            {date.format("D")}
-
-        </div>
-    )
 
     const handlePrevMonth = () => {
         setCurrentDate(currentDate.subtract(1, 'month'))
@@ -91,109 +51,49 @@ export default function Calendar() {
         const firstDateOfMonth = currentDate.startOf('month');
         const startDayOfWeek = firstDateOfMonth.day();
         const arrayOfDate = [];
-    
+
         const startDate = firstDateOfMonth.subtract(startDayOfWeek === 0 ? 6 : startDayOfWeek - 1, 'day');
-    
+
         for (let i = 0; i < 42; i++) {
             const currentDate = startDate.add(i, 'day');
             const highlightedDate = highlightDates.find(dateObj => dateObj.date.toDateString() === currentDate.toDate().toDateString());
             const isHighlighted = Boolean(highlightedDate);
-    
+
             arrayOfDate.push({
                 date: currentDate,
                 currentMonth: currentDate.month() === firstDateOfMonth.month(),
                 today: currentDate.isSame(dayjs(), 'day'),
                 highlight: isHighlighted,
-                highlightOrganization : isHighlighted ? highlightedDate.organization : null,
+                highlightOrganization: isHighlighted ? highlightedDate.organization : null,
                 highlightTitle: isHighlighted ? highlightedDate.title : null,
                 highlightText: isHighlighted ? highlightedDate.text : null
             });
         }
-    
+
         return arrayOfDate;
     };
 
     return (
-        <div className="calendar-page">
+        <div className="calendar-page h-screen">
 
-        {loading ? (
-            <div className="loader-container">
-                <HashLoader color="#d69d36" loading size={75} />
-            </div>
-          
-
+            {loading ? (
+                <div className="flex justify-center items-center h-full">
+                    <HashLoader color="#0096FF" loading size={75} />
+                </div>
             ) : (
-            <>
-            <div className="calendar-window">
-                <div className="calendar">
-                    <CalendarHeader
-                        month={currentDate.month()}
-                        year={currentDate.year()}
-                        onPrevMonth={handlePrevMonth}
-                        onNextMonth={handleNextMonth}
+                <>
+                    <CalendarWindow
+                        currentDate={currentDate}
+                        handlePrevMonth={handlePrevMonth}
+                        handleNextMonth={handleNextMonth}
+                        swedishWeekdaysChar={swedishWeekdaysChar}
+                        generateDate={generateDate}
+                        setSelectDate={setSelectDate}
                     />
 
-                    <div className="calendar-weekdays-text">
-                        {swedishWeekdaysChar.map((day, index) => (
-                            <div key={index}>{day}</div>
-                        ))}
-                    </div>
-
-                    <div className="calendar-date">
-                        {generateDate().map((dateObj, index) => (
-                            <CalendarDateCell
-                                key={index}
-                                date={dateObj.date}
-                                isCurrentMonth={dateObj.currentMonth}
-                                isToday={dateObj.today}
-                                highlight={dateObj.highlight}
-                            />
-                        ))}
-                    </div>
-                </div>
-
-                <div className="today-schedule">
-                <h1>Dagens händelser för {`${swedishWeekdays[dayjs(selectDate.toDate().getDay() + 6) % 7]} den 
-                    ${getOrdinalSuffix(dayjs(selectDate.toDate()).date())}
-                    ${swedishMonths[dayjs(selectDate.toDate()).month()].toLowerCase()}`}
-                </h1>
-
-                    {generateDate().some(dateObj => dateObj.date.isSame(selectDate, 'day') && dateObj.highlight) ? (
-                        generateDate().map(dateObj => {
-                            if (dateObj.date.isSame(selectDate, 'day') && dateObj.highlight) {
-                                return (
-                                    <div key={dateObj.date.toDate().toDateString()}>
-                                        <h3>{dateObj.highlightOrganization} - {dateObj.highlightTitle}</h3>
-                                        <p>{dateObj.highlightText}</p>
-                                    </div>
-                                );
-                            }
-                            return null;
-                        })
-                    ) : (
-                        <p className="no-schedule">Inga aktiviteter för idag.</p>
-                    )}
-                </div>
-            </div>
-
-            <div className="event-list">
-                <h2>Evenemang för {swedishMonths[currentDate.month()]}</h2>
-                <ul>
-                    {sortedHighlightDates.map((event, index) => {
-                        const eventDate = dayjs(event.date);
-                        return (
-                            eventDate.month() === currentDate.month() && eventDate.year() === currentDate.year() &&
-                             (
-                                <li key={index}>
-                                    <h3>{event.organization} - {event.title}</h3>
-                                    <p>{swedishMonths[eventDate.month()]} {eventDate.format("D, YYYY")} - {event.text}</p>
-                                </li>
-                            )
-                        );
-                    })}
-                </ul>
-            </div>
-            </>
+                    <TodaySchedule selectDate={selectDate} generateDate={generateDate} />
+                    <EventList sortedHighlightDates={sortedHighlightDates} currentDate={currentDate} />
+                </>
             )}
         </div>
     )

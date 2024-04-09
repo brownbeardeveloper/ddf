@@ -5,13 +5,6 @@
   padding: 5%;
 }
 
-.loader-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px; 
-}
-
 .calendar {
   border-right: 1px solid #aaaaaa;
 }
@@ -76,30 +69,6 @@
   cursor: default; /* Add cursor default for non-interactable dates */
 }
 
-.highlighted {
-  background-color: #9c27b0; 
-  border-radius: 50%;
-  color: rgb(255, 255, 255); 
-}
-
-.highlighted:hover {
-  background-color: #7b1fa2; 
-}
-
-
-.selected-date {
-    background-color: #4169E1; /* Use your desired hover background color for the current month */
-    color: #fff; /* Use your desired hover text color for the current month */
-}
-
-.selected-date:hover {
-  background-color: #0000CD;
-}
-
-.today-schedule h3, .no-schedule {
-  margin-top: 2%;
-}
-
 /* Add these styles to your Calendar.css file */
 .event-list {
   margin-top: 20px;
@@ -142,11 +111,6 @@
   color: #666;
 }
 
-.current-date {
-  background-color: #32CD32; /* Use your desired background color for today's date */
-  color: #fff; /* Use your desired text color for today's date */
-}
-
 .current-date:hover {
   background-color: #228B22; /* Use your desired hover background color for today's date */
 }
@@ -163,11 +127,6 @@
     margin-bottom: 2%; /* Adjust margin for smaller screens */
   }
 
-  .today-schedule {
-    margin-top: 20px; /* Adjust margin for smaller screens */
-    padding: 20px; /* Adjust padding for smaller screens */
-  }
-
   .event-list {
     margin-top: 10px; /* Adjust margin for smaller screens */
     padding: 10px; /* Adjust padding for smaller screens */
@@ -182,3 +141,31 @@
     padding: 8px; /* Adjust padding for smaller screens */
   }
 }
+
+
+/* save all classes below */
+
+.current-date { 
+  background-color: #32CD32; /* Use your desired background color for today's date */
+  color: #fff; /* Use your desired text color for today's date */
+}
+
+.selected-date {
+  background-color: #4169E1; /* Use your desired hover background color for the current month */
+  color: #fff; /* Use your desired hover text color for the current month */
+}
+
+.selected-date:hover {
+background-color: #0000CD;
+}
+
+.highlighted {
+  background-color: #9c27b0; 
+  border-radius: 50%;
+  color: rgb(255, 255, 255); 
+}
+
+.highlighted:hover {
+  background-color: #7b1fa2; 
+}
+
