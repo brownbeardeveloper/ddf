@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { swedishMonths, swedishWeekdays } from '../data/se-version';
+import { swedishMonths, swedishWeekdays } from '../data/se-version.js';
 import { getOrdinalSuffix } from '../functions/getOrdinalSuffix.js';
 
 export default function TodaySchedule({ selectDate, generateDate }) {

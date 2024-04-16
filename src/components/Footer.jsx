@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import FacebookIcon from './icons/FacebookIcon';
 
-export default function Footer({ user }) {
+const Footer = ({ user }) => {
     return (
-        <footer className="bg-gray-200 border-t border-gray-300 py-8">
+        <footer className="bg-gray-200 border-t border-gray-300 py-8 mt-auto">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div>
@@ -53,3 +53,5 @@ export default function Footer({ user }) {
         </footer>
     );
 }
+
+export default Footer;

@@ -7,6 +7,7 @@ import { swedishWeekdaysChar } from "../data/se-version";
 import TodaySchedule from "../components/Today-schedule";
 import CalendarWindow from "../components/calendar/CalendarWindow";
 import EventList from "../components/EventList";
+import SideIcons from "../components/side-icon";
 
 export default function Calendar() {
     const today = dayjs();
@@ -82,16 +83,18 @@ export default function Calendar() {
                 </div>
             ) : (
                 <>
-                    <CalendarWindow
-                        currentDate={currentDate}
-                        handlePrevMonth={handlePrevMonth}
-                        handleNextMonth={handleNextMonth}
-                        swedishWeekdaysChar={swedishWeekdaysChar}
-                        generateDate={generateDate}
-                        setSelectDate={setSelectDate}
-                    />
-
-                    <TodaySchedule selectDate={selectDate} generateDate={generateDate} />
+                    <div className="flex flex-row">
+                        <SideIcons />
+                        <CalendarWindow
+                            currentDate={currentDate}
+                            handlePrevMonth={handlePrevMonth}
+                            handleNextMonth={handleNextMonth}
+                            swedishWeekdaysChar={swedishWeekdaysChar}
+                            generateDate={generateDate}
+                            setSelectDate={setSelectDate}
+                        />
+                        <TodaySchedule selectDate={selectDate} generateDate={generateDate} />
+                    </div>
                     <EventList sortedHighlightDates={sortedHighlightDates} currentDate={currentDate} />
                 </>
             )}
