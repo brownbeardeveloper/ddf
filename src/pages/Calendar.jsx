@@ -91,6 +91,7 @@ export default function Calendar() {
                             handleNextMonth={handleNextMonth}
                             swedishWeekdaysChar={swedishWeekdaysChar}
                             generateDate={generateDate}
+                            selectDate={selectDate}
                             setSelectDate={setSelectDate}
                         />
                         <TodaySchedule selectDate={selectDate} generateDate={generateDate} />

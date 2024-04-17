@@ -3,7 +3,7 @@ import CalendarHeader from './CalendarHeader';
 import CalendarDateCell from './CalendarDateCell';
 import { swedishWeekdaysChar } from '../../data/se-version';
 
-const CalendarWindow = ({ currentDate, handlePrevMonth, handleNextMonth, generateDate, setSelectDate }) => (
+const CalendarWindow = ({ currentDate, handlePrevMonth, handleNextMonth, generateDate, selectDate, setSelectDate }) => (
   <div className="grid gap-3 p-5">
     <div className="border-r border-gray-400">
 
@@ -29,6 +29,7 @@ const CalendarWindow = ({ currentDate, handlePrevMonth, handleNextMonth, generat
             isCurrentMonth={dateObj.currentMonth}
             isToday={dateObj.today}
             highlight={dateObj.highlight}
+            selectDate={selectDate}
             onClick={() => setSelectDate(dateObj.date)}
           />
           
