@@ -1,6 +1,3 @@
-import React from "react";
-import * as BiIcons from 'react-icons/bi'
-
 export const SidebarData = [
     {
         title: 'Hem',
@@ -57,5 +54,3 @@ export const SidebarData = [
         cName: 'nav-text'
     },
 ]
-
-export default SidebarData;

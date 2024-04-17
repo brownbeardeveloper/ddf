@@ -1,5 +1,5 @@
 export default function CalendarDateCell({ date, isCurrentMonth, isToday, highlight, selectDate, onClick }) {
-    let classNames = "w-10 h-10 flex items-center justify-center rounded-full cursor-pointer border ";
+    let classNames = "w-10 h-10 m-1 flex items-center justify-center rounded-full cursor-pointer border ";
 
     switch (true) {
         case date.toISOString() === selectDate.toISOString():

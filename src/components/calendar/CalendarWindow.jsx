@@ -4,8 +4,8 @@ import CalendarDateCell from './CalendarDateCell';
 import { swedishWeekdaysChar } from '../../data/se-version';
 
 const CalendarWindow = ({ currentDate, handlePrevMonth, handleNextMonth, generateDate, selectDate, setSelectDate }) => (
-  <div className="grid gap-3 p-5">
-    <div className="border-r border-gray-400">
+  <div className="">
+    <div className="p-5 border rounded-lg border-gray-400">
 
       <CalendarHeader
         month={currentDate.month()}
