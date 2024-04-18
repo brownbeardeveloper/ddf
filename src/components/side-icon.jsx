@@ -4,7 +4,7 @@ export default function SideIcons() {
 
 
     return (
-        <div className="flex flex-col p-6 bg-yellow-400 md:flex-row md:justify-between">
+        <div className="flex flex-col p-6  md:flex-row md:justify-between">
             <ul className="flex flex-col md:mb-0 md:mt-4">
                 <li>
                     <Link to="/" className="bg-blue-800 flex items-center justify-center w-24 h-24 rounded-full mb-4

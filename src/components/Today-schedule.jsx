@@ -6,7 +6,7 @@ import { getOrdinalSuffix } from '../functions/getOrdinalSuffix.js';
 export default function TodaySchedule({ selectDate, generateDate }) {
 
     return (
-        <div className="bg-gray-100 p-4 rounded-md">
+        <div className="bg-gray-100 p-4 rounded-md border border-slate-400">
             <h1 className="text-xl font-bold mb-4">
                 Dagens händelser för {`${swedishWeekdays[dayjs(selectDate.toDate().getDay() + 6) % 7]} den 
             ${getOrdinalSuffix(dayjs(selectDate.toDate()).date())}

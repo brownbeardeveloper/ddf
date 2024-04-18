@@ -75,16 +75,17 @@ export default function Calendar() {
     };
 
     return (
-        <div className="calendar-page h-screen">
+        <main className="h-screen">
 
             {loading ? (
                 <div className="flex justify-center items-center h-full">
                     <HashLoader color="#0096FF" loading size={75} />
                 </div>
             ) : (
-                <>
-                    <div className="flex flex-row">
+                <div className="bg-slate-300">
+                    <div className="flex flex-row justify-between items-start">
                         <SideIcons />
+                        <div className="mt-5">
                         <CalendarWindow
                             currentDate={currentDate}
                             handlePrevMonth={handlePrevMonth}
@@ -94,11 +95,14 @@ export default function Calendar() {
                             selectDate={selectDate}
                             setSelectDate={setSelectDate}
                         />
+                        </div>
+                        <div className="mt-5 ml-5 mr-5 w-6/12">
                         <TodaySchedule selectDate={selectDate} generateDate={generateDate} />
+                        </div>
                     </div>
                     <EventList sortedHighlightDates={sortedHighlightDates} currentDate={currentDate} />
-                </>
+                </div>
             )}
-        </div>
+        </main>
     )
 }    

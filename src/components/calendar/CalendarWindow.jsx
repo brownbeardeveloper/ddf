@@ -5,7 +5,7 @@ import { swedishWeekdaysChar } from '../../data/se-version';
 
 const CalendarWindow = ({ currentDate, handlePrevMonth, handleNextMonth, generateDate, selectDate, setSelectDate }) => (
   <div className="">
-    <div className="p-5 border rounded-lg border-gray-400">
+    <div className="p-5 border rounded-lg border-gray-400 bg-gray-100">
 
       <CalendarHeader
         month={currentDate.month()}
